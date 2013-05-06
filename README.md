@@ -62,4 +62,5 @@ Public vars :
 Public methods :
 
 * **process** - Process the captcha generation.
+* **check** - Static method that checks the captcha code entered.
 * **getLogs** - Static method that returns the logs.

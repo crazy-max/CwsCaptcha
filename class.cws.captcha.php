@@ -332,6 +332,16 @@ class CwsCaptcha
     }
     
     /**
+     * Check the captcha code entered
+     * @param string $code : the captcha to verify
+     * @return boolean
+     */
+    public static function check($code)
+    {
+        return isset($_SESSION[CWSCAP_SESSION_VAR]) && strtolower($_SESSION[CWSCAP_SESSION_VAR]) === strtolower($code);
+    }
+    
+    /**
      * Display image
      */
     private function writeImage()
