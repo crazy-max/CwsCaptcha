@@ -16,12 +16,14 @@
  * details.
  * 
  * Please see the GNU General Public License at http://www.gnu.org/licenses/.
+ * 
+ * Related post: http://goo.gl/mMvc9
  *
  * @package CwsCaptcha
  * @author Cr@zy
  * @copyright 2013, Cr@zy
  * @license GPL licensed
- * @version 1.0
+ * @version 1.1
  * @link https://github.com/crazy-max/CwsCaptcha
  *
  */
@@ -43,7 +45,7 @@ class CwsCaptcha
      * CwsCaptcha version.
      * @var string
      */
-    public $version = "1.0";
+    public $version = "1.1";
     
     /**
      * Captcha width in px.

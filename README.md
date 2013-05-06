@@ -64,3 +64,8 @@ Public methods :
 * **process** - Process the captcha generation.
 * **check** - Static method that checks the captcha code entered.
 * **getLogs** - Static method that returns the logs.
+
+More infos
+----------
+
+http://www.crazyws.fr/dev/classes-php/cwscaptcha-une-classe-php-de-generation-de-captcha-IS7V3.html
