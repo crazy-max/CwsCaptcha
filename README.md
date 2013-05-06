@@ -16,25 +16,25 @@ Getting started
 
 Create a blank php file called ``captcha.php`` for example in the same folder as ``class.cws.captcha.php`` and insert this :
 
-.. code-block:: php
+```php
+<?php
 
-    <?php
-    
-    session_start();
-    
-    include('../class.cws.captcha.php');
-    
-    $cwsCaptcha = new CwsCaptcha();
-    $cwsCaptcha->debug_verbose = CWSCAP_VERBOSE_DEBUG;
-    $cwsCaptcha->process();
-    
-    ?>
-    
+session_start();
+
+include('../class.cws.captcha.php');
+
+$cwsCaptcha = new CwsCaptcha();
+$cwsCaptcha->debug_verbose = CWSCAP_VERBOSE_DEBUG;
+$cwsCaptcha->process();
+
+?>
+```
+
 Then add this in your HTML file :
 
-.. code-block:: html
-    
-    <img src="image.php" />
+```html
+<img src="image.php" />
+```
 
 Options
 -------
