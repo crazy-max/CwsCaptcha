@@ -11,6 +11,14 @@ Installation
 * Copy the ``class.cws.captcha.php`` file in a folder on your server.
 * Go to ``example/index.php`` to see an example.
 
+Example
+-------
+
+An example is available in ``example/index.php`` :
+
+![](http://static.crazyws.fr/resources/blog/2013/05/cwscaptcha-example.png)
+
+
 Getting started
 ------------
 
