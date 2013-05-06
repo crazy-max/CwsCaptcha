@@ -33,7 +33,7 @@ $cwsCaptcha->process();
 Then add this in your HTML file :
 
 ```html
-<img src="image.php" />
+<img src="captcha.php" />
 ```
 
 Options
