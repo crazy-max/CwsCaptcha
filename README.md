@@ -29,7 +29,7 @@ Create a blank php file called ``captcha.php`` for example in the same folder as
 
 session_start();
 
-include('../class.cws.captcha.php');
+include('class.cws.captcha.php');
 
 $cwsCaptcha = new CwsCaptcha();
 $cwsCaptcha->debug_verbose = CWSCAP_VERBOSE_DEBUG;
