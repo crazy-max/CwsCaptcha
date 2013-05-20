@@ -23,7 +23,7 @@
  * @author Cr@zy
  * @copyright 2013, Cr@zy
  * @license GPL licensed
- * @version 1.1
+ * @version 1.2
  * @link https://github.com/crazy-max/CwsCaptcha
  *
  */
@@ -45,7 +45,7 @@ class CwsCaptcha
      * CwsCaptcha version.
      * @var string
      */
-    public $version = "1.1";
+    public $version = "1.2";
     
     /**
      * Captcha width in px.
@@ -213,10 +213,10 @@ class CwsCaptcha
     
     /**
      * Control the debug output.
-     * default CWSCAP_VERBOSE_SIMPLE
+     * default CWSCAP_VERBOSE_QUIET
      * @var int
      */
-    public $debug_verbose = CWSCAP_VERBOSE_SIMPLE;
+    public $debug_verbose = CWSCAP_VERBOSE_QUIET;
     
     /**
      * The resource handler for the image
