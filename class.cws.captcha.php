@@ -69,43 +69,43 @@ class CwsCaptcha
      * Captcha width in px.
      * @var int
      */
-    public $width = 250;
+    private $width = 250;
     
     /**
      * Captcha height in px.
      * @var int
      */
-    public $height = 60;
+    private $height = 60;
     
     /**
      * Captcha minimum length.
      * @var int
      */
-    public $minLength = 6;
+    private $minLength = 6;
     
     /**
      * Captcha maximum length.
      * @var int
      */
-    public $maxLength = 10;
+    private $maxLength = 10;
     
     /**
      * Hexadecimal background color.
      * @var string
      */
-    public $bgdColor = '#FFFFFF';
+    private $bgdColor = '#FFFFFF';
     
     /**
      * Set background transparent for PNG image type. If enabled, this will disable the background color.
      * @var boolean
      */
-    public $bgdTransparent = false;
+    private $bgdTransparent = false;
     
     /**
      * Hexadecimal foreground colors list for font letters.
      * @var array
      */
-    public $fgdColors = array(
+    private $fgdColors = array(
         '#006ACC', // blue
         '#00CC00', // green
         '#CC0000', // red
@@ -117,7 +117,7 @@ class CwsCaptcha
      * Fonts definition (letter_space, min and max size, filename)
      * @var array
      */
-    public $fonts = array(
+    private $fonts = array(
         array(
             'letter_space'    => 1,
             'min_size'        => 14,
@@ -172,49 +172,49 @@ class CwsCaptcha
      * Max clockwise rotations for a letter.
      * @var int
      */
-    public $maxRotation = 7;
+    private $maxRotation = 7;
     
     /**
      * Generated image period (x, y)
      * @var array
     */
-    public $period = array(11, 12);
+    private $period = array(11, 12);
     
     /**
      * Generated image amplitude (x, y)
      * @var array
     */
-    public $amplitude = array(5, 14);
+    private $amplitude = array(5, 14);
     
     /**
      * Add blur effect using the Gaussian method.
      * @var boolean
     */
-    public $blur = false;
+    private $blur = false;
     
     /**
      * Add emboss effect
      * @var boolean
      */
-    public $emboss = false;
+    private $emboss = false;
     
     /**
      * Add pixelate effect
      * @var boolean
      */
-    public $pixelate = false;
+    private $pixelate = false;
     
     /**
      * Image format
      * @var string
      */
-    public $format = CWSCAP_FORMAT_PNG;
+    private $format = CWSCAP_FORMAT_PNG;
     
     /**
-     * The last error message.
+     * The last error.
      * @var string
      */
-    public $error;
+    private $error;
     
     public function __construct() {}
     

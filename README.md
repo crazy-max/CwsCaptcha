@@ -66,7 +66,6 @@ An example is available in ``index.php`` :
 
 **process** - Process the captcha generation.<br />
 **check** - Static method that checks the captcha code entered.<br />
-**getLogs** - Static method that returns the logs.<br />
 
 **setDebugVerbose** - Set the debug verbose. (see CwsDebug class)<br />
 **setDebugMode** - Set the debug mode. (see CwsDebug class)<br />
