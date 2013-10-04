@@ -5,94 +5,113 @@
  *
  * CwsCaptcha is a PHP class to generate a captcha to avoid spam.
  * 
- * This program is free software: you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the Free
- * Software Foundation, either version 3 of the License, or (at your option)
- * any later version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * Please see the GNU General Public License at http://www.gnu.org/licenses/.
+ * CwsCaptcha is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at your option)
+ * or (at your option) any later version.
+ *
+ * CwsCaptcha is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/.
  * 
  * Related post: http://goo.gl/mMvc9
  *
  * @package CwsCaptcha
  * @author Cr@zy
  * @copyright 2013, Cr@zy
- * @license GPL licensed
- * @version 1.2
+ * @license GNU LESSER GENERAL PUBLIC LICENSE
+ * @version 1.3
  * @link https://github.com/crazy-max/CwsCaptcha
  *
  */
 
 define('CWSCAP_FONT_FACTOR',    9);            // font size factor [0-100]
-define('CWSCAP_FORMAT_PNG',     'png');
-define('CWSCAP_FORMAT_JPEG',    'jpeg');
 define('CWSCAP_IMAGE_FACTOR',   3);            // image size factor [1-3]
 define('CWSCAP_SESSION_VAR',    'cwscaptcha'); // the session var
 
-define('CWSCAP_VERBOSE_QUIET',  0);            // means no output at all.
-define('CWSCAP_VERBOSE_SIMPLE', 1);            // means only output simple report.
-define('CWSCAP_VERBOSE_REPORT', 2);            // means output a detail report.
-define('CWSCAP_VERBOSE_DEBUG',  3);            // means output detail report as well as debug info.
+define('CWSCAP_FORMAT_PNG',     'png');
+define('CWSCAP_FORMAT_JPEG',    'jpeg');
 
 class CwsCaptcha
 {
     /**
-     * CwsCaptcha version.
+     * Control the debug output. (see CwsDebug class)
+     * @var int
+     */
+    private $debugVerbose = false;
+    
+    /**
+     * The debug output mode. (see CwsDebug class)
+     * default CWSDEBUG_MODE_FILE
+     * @var int
+     */
+    private $debugMode = CWSDEBUG_MODE_FILE;
+    
+    /**
+     * The debug file path in CWSDEBUG_MODE_FILE mode. (see CwsDebug class)
+     * default './cwscaptcha-debug.html'
      * @var string
      */
-    public $version = "1.2";
+    private $debugFilePath = './cwscaptcha-debug.html';
+    
+    /**
+     * Clear the file at the beginning. (see CwsDebug class)
+     * default true
+     * @var boolean
+     */
+    private $debugFileClear = true;
     
     /**
      * Captcha width in px.
-     * default 250
      * @var int
      */
     public $width = 250;
     
     /**
      * Captcha height in px.
-     * default 60
      * @var int
      */
     public $height = 60;
     
     /**
      * Captcha minimum length.
-     * default 6
      * @var int
      */
-    public $min_length = 6;
+    public $minLength = 6;
     
     /**
      * Captcha maximum length.
-     * default 10
      * @var int
      */
-    public $max_length = 10;
+    public $maxLength = 10;
+    
+    /**
+     * Hexadecimal background color.
+     * @var string
+     */
+    public $bgdColor = '#FFFFFF';
+    
+    /**
+     * Set background transparent for PNG image type. If enabled, this will disable the background color.
+     * @var boolean
+     */
+    public $bgdTransparent = false;
     
     /**
      * Hexadecimal foreground colors list for font letters.
      * @var array
      */
-    public $fgd_colors = array(
-        "#006acc", // blue
-        "#00cc00", // green
-        "#cc0000", // red
-        "#8b28fa", // purple
-        "#ff7007", // orange
+    public $fgdColors = array(
+        '#006ACC', // blue
+        '#00CC00', // green
+        '#CC0000', // red
+        '#8B28FA', // purple
+        '#FF7007', // orange
     );
-    
-    /**
-     * Max clockwise rotations for a letter.
-     * default 7
-     * @var int
-     */
-    public $max_rotation = 7;
     
     /**
      * Fonts definition (letter_space, min and max size, filename)
@@ -150,57 +169,43 @@ class CwsCaptcha
     );
     
     /**
-     * Hexadecimal background color.
-     * default #ffffff
-     * @var string
+     * Max clockwise rotations for a letter.
+     * @var int
      */
-    public $bgd_color = "#ffffff";
-    
-    /**
-     * Set background transparent for PNG image type. If enabled, this will disable the background color.
-     * default true
-     * @var boolean
-     */
-    public $bgd_transparent = false;
+    public $maxRotation = 7;
     
     /**
      * Generated image period (x, y)
-     * default array(11, 12)
      * @var array
     */
     public $period = array(11, 12);
     
     /**
      * Generated image amplitude (x, y)
-     * default array(5, 14)
      * @var array
     */
     public $amplitude = array(5, 14);
     
     /**
      * Add blur effect using the Gaussian method.
-     * default false
      * @var boolean
     */
     public $blur = false;
     
     /**
      * Add emboss effect
-     * default false
      * @var boolean
      */
     public $emboss = false;
     
     /**
      * Add pixelate effect
-     * default false
      * @var boolean
      */
     public $pixelate = false;
     
     /**
      * Image format
-     * default CWSCAP_FORMAT_PNG
      * @var string
      */
     public $format = CWSCAP_FORMAT_PNG;
@@ -209,83 +214,37 @@ class CwsCaptcha
      * The last error message.
      * @var string
      */
-    public $error_msg;
+    public $error;
     
-    /**
-     * Control the debug output.
-     * default CWSCAP_VERBOSE_QUIET
-     * @var int
-     */
-    public $debug_verbose = CWSCAP_VERBOSE_QUIET;
-    
-    /**
-     * The resource handler for the image
-     * @var object
-     */
-    private $_handler = false;
-    
-    /**
-     * Defines new line ending.
-     * @var string
-     */
-    private $_newline = "<br />\n";
-    
-    /**
-     * Class constructor
-     */
-    public function __construct()
-    {
-        if ($this->debug_verbose != CWSCAP_VERBOSE_QUIET) {
-            $handle = @fopen(dirname(__FILE__) . '/cwsCaptcha.log', 'w');
-            fclose($handle);
-        } else {
-            @unlink(dirname(__FILE__) . '/cwsCaptcha.log');
-        }
-    }
-    
-    /**
-     * Log additional msg for debug to a temporary file
-     * @param string $msg : if not given, log the last error msg
-     * @param int $verbose_level : the log level of this message
-     */
-    private function log($msg=false, $verbose_level=CWSCAP_VERBOSE_SIMPLE, $newline=true, $code=false)
-    {
-        if ($this->debug_verbose >= $verbose_level) {
-            $handle = @fopen(dirname(__FILE__) . '/cwsCaptcha.log', 'a+');
-            
-            if (empty($msg)) {
-                fwrite($handle, 'ERROR: ' . $this->error_msg);
-            } else {
-                if ($code) {
-                    fwrite($handle, '<textarea style="width:100%;height:300px;">');
-                    fprintf($handle, $msg);
-                    fwrite($handle, '</textarea>');
-                } else {
-                    fwrite($handle, $msg);
-                }
-            }
-            if ($newline) {
-                fwrite($handle, $this->_newline);
-            }
-            
-            fclose($handle);
-        }
-    }
+    public function __construct() {}
     
     /**
      * Start process
      */
     public function process()
     {
+        if (!class_exists('CwsDebug')) {
+            $this->error = 'CwsDebug is required - https://github.com/crazy-max/CwsDebug';
+            echo $this->error;
+            return;
+        }
+        
+        global $cwsDebug;
+        $cwsDebug = new CwsDebug();
+        $cwsDebug->setVerbose($this->debugVerbose);
+        $cwsDebug->setMode($this->debugMode, $this->debugFilePath, $this->debugFileClear);
+        
+        $cwsDebug->titleH2('process');
+        
         $this->destroy();
         
         // create a blank image
-        $this->log('<strong>Create blank image</strong> : ' . ($this->width * CWSCAP_IMAGE_FACTOR) . 'x' . ($this->height * CWSCAP_IMAGE_FACTOR), CWSCAP_VERBOSE_REPORT);
+        $cwsDebug->labelValue('Create blank image', ($this->width * CWSCAP_IMAGE_FACTOR) . 'x' . ($this->height * CWSCAP_IMAGE_FACTOR), CWSDEBUG_VERBOSE_REPORT);
         $this->_handler = imagecreatetruecolor($this->width * CWSCAP_IMAGE_FACTOR, $this->height * CWSCAP_IMAGE_FACTOR);
         
         // background color
-        if ($this->bgd_transparent) {
-            $this->log('<strong>Background color</strong> : transparent', CWSCAP_VERBOSE_REPORT);
+        if ($this->bgdTransparent) {
+            $cwsDebug->labelValue('Background color', 'transparent', CWSDEBUG_VERBOSE_REPORT);
             
             // disable blending
             imagealphablending($this->_handler, false);
@@ -298,27 +257,26 @@ class CwsCaptcha
             
             // save full alpha channel information
             imagesavealpha($this->_handler, true);
-        } elseif (!empty($this->bgd_color)) {
+        } elseif (!empty($this->bgdColor)) {
             // allocate background color
-            $rgb_bgd_color = $this->getRgbFromHex($this->bgd_color);
-            $this->log('<strong>Background color</strong> : ' . implode(" ; ", $rgb_bgd_color), CWSCAP_VERBOSE_REPORT);
-            $bgd_color = imagecolorallocate($this->_handler, $rgb_bgd_color[0], $rgb_bgd_color[1], $rgb_bgd_color[2]);
-            imagefill($this->_handler, 0, 0, $bgd_color);
+            $rgbBgdColor = $this->getRgbFromHex($this->bgdColor);
+            $cwsDebug->labelValue('Background color', implode(' ; ', $rgbBgdColor), CWSDEBUG_VERBOSE_REPORT);
+            $bgdColor = imagecolorallocate($this->_handler, $rgbBgdColor[0], $rgbBgdColor[1], $rgbBgdColor[2]);
+            imagefill($this->_handler, 0, 0, $bgdColor);
         }
         
         // allocate foreground color
-        $rgb_fgd_color = $this->getRgbFromHex($this->fgd_colors[mt_rand(0, sizeof($this->fgd_colors) - 1)]); // pick a random color
-        $this->log('<strong>Foreground color (letters)</strong> : ' . implode(" ; ", $rgb_fgd_color), CWSCAP_VERBOSE_REPORT);
-        $fgd_color = imagecolorallocate($this->_handler, $rgb_fgd_color[0], $rgb_fgd_color[1], $rgb_fgd_color[2]);
+        $rgbFgdColor = $this->getRgbFromHex($this->fgdColors[mt_rand(0, sizeof($this->fgdColors) - 1)]); // pick a random color
+        $cwsDebug->labelValue('Foreground color (letters)', implode(' ; ', $rgbFgdColor), CWSDEBUG_VERBOSE_REPORT);
+        $fgd_color = imagecolorallocate($this->_handler, $rgbFgdColor[0], $rgbFgdColor[1], $rgbFgdColor[2]);
         
         // write text on image
-        $rdm_str = $this->getRandomString();
-        $this->log('Captcha string : <strong>' . $rdm_str . '</strong>', CWSCAP_VERBOSE_SIMPLE);
-        $this->writeText($rdm_str, $fgd_color);
+        $rdmStr = $this->getRandomString();
+        $this->writeText($rdmStr, $fgd_color);
         
         // add text in session
-        $_SESSION[CWSCAP_SESSION_VAR] = $rdm_str;
-        $this->log('Captcha string wrote in <strong>$_SESSION[\'' . CWSCAP_SESSION_VAR . '\']</strong>', CWSCAP_VERBOSE_SIMPLE);
+        $_SESSION[CWSCAP_SESSION_VAR] = $rdmStr;
+        $cwsDebug->labelValue('Captcha string wrote in', '$_SESSION[\'' . CWSCAP_SESSION_VAR . '\']');
         
         // distorted and add effects
         $this->distortImage();
@@ -348,21 +306,24 @@ class CwsCaptcha
      */
     private function writeImage()
     {
+        global $cwsDebug;
+        $cwsDebug->titleH3('writeImage');
+        
         if ($this->format == CWSCAP_FORMAT_PNG && function_exists('imagepng')) {
             $this->writeHeaders();
-            $this->log('Display image as <strong>PNG<strong>', CWSCAP_VERBOSE_SIMPLE);
+            $cwsDebug->labelValue('Display image as', 'PNG');
             
-            header("Content-type: image/png");
-            if ($this->bgd_transparent) {
+            header('Content-type: image/png');
+            if ($this->bgdTransparent) {
                 imagealphablending($this->_handler, false);
                 imagesavealpha($this->_handler, true);
             }
             imagepng($this->_handler);
         } else {
             $this->writeHeaders();
-            $this->log('Display image as <strong>JPEG<strong>', CWSCAP_VERBOSE_SIMPLE);
+            $cwsDebug->labelValue('Display image as', 'JPEG');
             
-            header("Content-type: image/jpeg");
+            header('Content-type: image/jpeg');
             imagejpeg($this->_handler, null, 90);
         }
     }
@@ -372,24 +333,32 @@ class CwsCaptcha
      */
     private function writeHeaders()
     {
-        $this->log('<strong>Write headers<strong>', CWSCAP_VERBOSE_DEBUG);
+        global $cwsDebug;
+        $cwsDebug->titleH3('writeHeaders', CWSDEBUG_VERBOSE_REPORT);
         
-        // already expired
-        header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
+        $expires = 'Thu, 01 Jan 1970 00:00:00 GMT';
+        $lastModified = gmdate('D, d M Y H:i:s', time()) . ' GMT';
+        $cacheNoStore = 'no-store, no-cache, must-revalidate';
+        $cachePostCheck = 'post-check=0, pre-check=0';
+        $cacheMaxAge = 'max-age=0';
+        $pragma = 'no-cache';
+        $etag = microtime();
         
-        // always modified
-        header("Last-Modified: " . gmdate("D, d M Y H:i:s", time()) . " GMT");
+        header('Expires: ' . $expires); // already expired
+        header('Last-Modified: ' . $lastModified); // always modified
+        header('Cache-Control: ' . $cacheNoStore); // HTTP/1.1
+        header('Cache-Control: ' . $cachePostCheck, false); // HTTP/1.1
+        header('Cache-Control: ' . $cacheMaxAge, false); // HTTP/1.1
+        header('Pragma: ' . $pragma); // HTTP/1.0
+        header('Etag: ' . $etag); // generate a unique etag each time
         
-        // HTTP/1.1
-        header("Cache-Control: no-store, no-cache, must-revalidate");
-        header("Cache-Control: post-check=0, pre-check=0", false);
-        header("Cache-Control: max-age=0", false);
-        
-        // HTTP/1.0
-        header("Pragma: no-cache");
-        
-        // generate a unique etag each time
-        header("Etag: " . microtime());
+        $cwsDebug->labelValue('Expires', $expires, CWSDEBUG_VERBOSE_REPORT);
+        $cwsDebug->labelValue('Last-Modified', $lastModified, CWSDEBUG_VERBOSE_REPORT);
+        $cwsDebug->labelValue('Cache-Control', $cacheNoStore, CWSDEBUG_VERBOSE_REPORT);
+        $cwsDebug->labelValue('Cache-Control', $cachePostCheck, CWSDEBUG_VERBOSE_REPORT);
+        $cwsDebug->labelValue('Cache-Control', $cacheMaxAge, CWSDEBUG_VERBOSE_REPORT);
+        $cwsDebug->labelValue('Pragma', $pragma, CWSDEBUG_VERBOSE_REPORT);
+        $cwsDebug->labelValue('Etag', $etag, CWSDEBUG_VERBOSE_REPORT);
     }
     
     /**
@@ -399,25 +368,29 @@ class CwsCaptcha
      */
     private function writeText($text, $color)
     {
-        $this->log('<strong>Write text</strong>', CWSCAP_VERBOSE_DEBUG);
+        global $cwsDebug;
+        $cwsDebug->titleH3('writeText', CWSDEBUG_VERBOSE_DEBUG);
+        
         $font = $this->fonts[array_rand($this->fonts)];
+        $fontPath = dirname(__FILE__) . '/fonts/' . $font['filename'];
+        $cwsDebug->labelValue('Font', $font['filename'], CWSDEBUG_VERBOSE_DEBUG);
         
-        $font_path = dirname(__FILE__) . '/fonts/' . $font['filename'];
-        $this->log('<strong>Font</strong> : ' . $font['filename'], CWSCAP_VERBOSE_DEBUG);
-        
-        $font_size_factor = 1 + (($this->max_length - strlen($text)) * (CWSCAP_FONT_FACTOR / 100));
-        $coord_x = 20 * CWSCAP_IMAGE_FACTOR;
-        $coord_y = round(($this->height * 27 / 40) * CWSCAP_IMAGE_FACTOR);
+        $fontSizeFactor = 1 + (($this->maxLength - strlen($text)) * (CWSCAP_FONT_FACTOR / 100));
+        $coordX = 20 * CWSCAP_IMAGE_FACTOR;
+        $coordY = round(($this->height * 27 / 40) * CWSCAP_IMAGE_FACTOR);
         
         for ($i = 0; $i < strlen($text); $i++) {
-            $angle = rand($this->max_rotation * -1, $this->max_rotation);
-            $font_size = rand($font['min_size'], $font['max_size']) * CWSCAP_IMAGE_FACTOR * $font_size_factor;
+            $angle = rand($this->maxRotation * -1, $this->maxRotation);
+            $fontSize = rand($font['min_size'], $font['max_size']) * CWSCAP_IMAGE_FACTOR * $fontSizeFactor;
             $letter = substr($text, $i, 1);
             
-            $this->log('Letter <strong>' . $letter . '</strong> at <strong>' . $coord_x . 'x' . $coord_y . '</strong> with a fontsize of <strong>' . $font_size . 'pt</strong> and an angle of <strong>' . $angle . '°</strong>', CWSCAP_VERBOSE_DEBUG);
+            $cwsDebug->simple('Letter <strong>' . $letter . '</strong> at <strong>'
+                . $coordX . 'x' . $coordY . '</strong> with a fontsize of <strong>'
+                . $fontSize . 'pt</strong> and an angle of <strong>'
+                . $angle . '°</strong>', CWSDEBUG_VERBOSE_DEBUG);
             
-            $coords = imagettftext($this->_handler, $font_size, $angle, $coord_x, $coord_y, $color, $font_path, $letter);
-            $coord_x += ($coords[2] - $coord_x) + ($font['letter_space'] * CWSCAP_IMAGE_FACTOR);
+            $coords = imagettftext($this->_handler, $fontSize, $angle, $coordX, $coordY, $color, $fontPath, $letter);
+            $coordX += ($coords[2] - $coordX) + ($font['letter_space'] * CWSCAP_IMAGE_FACTOR);
         }
     }
     
@@ -426,8 +399,11 @@ class CwsCaptcha
      */
     private function resampledImage()
     {
+        global $cwsDebug;
+        $cwsDebug->titleH3('resampledImage', CWSDEBUG_VERBOSE_REPORT);
+        
         $resampled = imagecreatetruecolor($this->width, $this->height);
-        if ($this->bgd_transparent) {
+        if ($this->bgdTransparent) {
             imagealphablending($resampled, false);
         }
         
@@ -435,9 +411,11 @@ class CwsCaptcha
             $this->width, $this->height, $this->width * CWSCAP_IMAGE_FACTOR, $this->height * CWSCAP_IMAGE_FACTOR
         );
         
-        $this->log('Image resampled from <strong>' . ($this->width * CWSCAP_IMAGE_FACTOR) . 'x' . ($this->height * CWSCAP_IMAGE_FACTOR) . '</strong> to <strong>' . $this->width . 'x' . $this->height . '</strong>', CWSCAP_VERBOSE_REPORT);
+        $cwsDebug->simple('Image resampled from <strong>'
+            . ($this->width * CWSCAP_IMAGE_FACTOR) . 'x' . ($this->height * CWSCAP_IMAGE_FACTOR) . '</strong> to <strong>'
+            . $this->width . 'x' . $this->height . '</strong>', CWSDEBUG_VERBOSE_REPORT);
         
-        if ($this->bgd_transparent) {
+        if ($this->bgdTransparent) {
             imagealphablending($resampled, true);
         }
         
@@ -451,15 +429,20 @@ class CwsCaptcha
      */
     private function getRandomString()
     {
+    	global $cwsDebug;
+    	$cwsDebug->titleH3('getRandomString');
+    	
         $str = '';
         $letters = 'abcdefghijklmnopqrstuvwxyz';
-        $length = rand($this->min_length, $this->max_length);
+        $length = rand($this->minLength, $this->maxLength);
         
         $last_index = strlen($letters) - 1;
         for ($i = 0; $i < $length; $i++) {
             mt_srand(hexdec(uniqid()));
             $str .= $letters[mt_rand(0, $last_index)];
         }
+        
+        $cwsDebug->labelValue('Captcha string', $str);
         
         return $str;
     }
@@ -469,22 +452,22 @@ class CwsCaptcha
      */
     private function distortImage()
     {
-        $x_axis = $this->period[0] * rand(1,3) * CWSCAP_IMAGE_FACTOR;
-        $y_axis = $this->period[1] * rand(1,2) * CWSCAP_IMAGE_FACTOR;
+        $xAxis = $this->period[0] * rand(1,3) * CWSCAP_IMAGE_FACTOR;
+        $yAxis = $this->period[1] * rand(1,2) * CWSCAP_IMAGE_FACTOR;
         
         // X process
         $rand = rand(0, 100);
         for ($i = 0; $i < ($this->width * CWSCAP_IMAGE_FACTOR); $i++) {
             imagecopy($this->_handler, $this->_handler,
-                $i - 1, sin($rand + $i / $x_axis) * ($this->amplitude[0] * CWSCAP_IMAGE_FACTOR),
+                $i - 1, sin($rand + $i / $xAxis) * ($this->amplitude[0] * CWSCAP_IMAGE_FACTOR),
                 $i, 0, 1, $this->height * CWSCAP_IMAGE_FACTOR);
         }
         
         // Y process
-        $k = rand(0, 100);
+        $rand = rand(0, 100);
         for ($i = 0; $i < ($this->height * CWSCAP_IMAGE_FACTOR); $i++) {
             imagecopy($this->_handler, $this->_handler,
-                sin($rand + $i / $y_axis) * ($this->amplitude[1] * CWSCAP_IMAGE_FACTOR), $i - 1,
+                sin($rand + $i / $yAxis) * ($this->amplitude[1] * CWSCAP_IMAGE_FACTOR), $i - 1,
                 0, $i, $this->width * CWSCAP_IMAGE_FACTOR, 1);
         }
     }
@@ -494,21 +477,24 @@ class CwsCaptcha
      */
     private function addEffects()
     {
+        global $cwsDebug;
+        $cwsDebug->titleH3('addEffects', CWSDEBUG_VERBOSE_REPORT);
+        
         // add blur effect
         if ($this->blur) {
-            $this->log('<strong>Blur effect</strong> added', CWSCAP_VERBOSE_REPORT);
+            $cwsDebug->simple('<strong>Blur effect</strong> added', CWSDEBUG_VERBOSE_REPORT);
             imagefilter($this->_handler, IMG_FILTER_GAUSSIAN_BLUR);
         }
         
         // add emboss effect
         if ($this->emboss) {
-            $this->log('<strong>Emboss effect</strong> added', CWSCAP_VERBOSE_REPORT);
+            $cwsDebug->simple('<strong>Emboss effect</strong> added', CWSDEBUG_VERBOSE_REPORT);
             imagefilter($this->_handler, IMG_FILTER_EMBOSS);
         }
         
         // add pixelate effect
         if ($this->pixelate) {
-            $this->log('<strong>Pixelate effect</strong> added', CWSCAP_VERBOSE_REPORT);
+            $cwsDebug->simple('<strong>Pixelate effect</strong> added', CWSDEBUG_VERBOSE_REPORT);
             imagefilter($this->_handler, IMG_FILTER_PIXELATE);
         }
     }
@@ -531,7 +517,10 @@ class CwsCaptcha
      */
     private function getRgbFromHex($hex)
     {
-        $hex = str_replace("#", "", $hex);
+        global $cwsDebug;
+        $cwsDebug->titleH3('getRgbFromHex', CWSDEBUG_VERBOSE_DEBUG);
+        
+        $hex = str_replace('#', '', $hex);
         
         if (strlen($hex) == 3) {
             $r = hexdec(substr($hex, 0, 1) . substr($hex, 0, 1));
@@ -543,21 +532,293 @@ class CwsCaptcha
             $b = hexdec(substr($hex, 4, 2));
         }
         
-        $this->log('<strong>Hex2Rgb</strong> : #' . $hex . ' => ' . implode(" ; ", array($r, $g, $b)), CWSCAP_VERBOSE_DEBUG);
+        $cwsDebug->labelValue('Hex2Rgb', '#' . $hex . ' => ' . implode(' ; ', array($r, $g, $b)), CWSDEBUG_VERBOSE_DEBUG);
         
         return array($r, $g, $b);
     }
     
     /**
-     * Static method that returns the logs
-     * @return string
+     * Getters and setters
      */
-    public static function getLogs()
+    
+    /**
+     * Set the debug verbose. (see CwsDebug class)
+     * @param int $debugVerbose
+     */
+    public function setDebugVerbose($debugVerbose)
     {
-        if (file_exists(dirname(__FILE__) . '/cwsCaptcha.log')) {
-            return '<div style="font-family:monospace">' . file_get_contents(dirname(__FILE__) . '/cwsCaptcha.log') . '</div>';
+        $this->debugVerbose = $debugVerbose;
+    }
+    
+    /**
+     * Set the debug mode. (see CwsDebug class)
+     * @param int $debugMode - CWSDEBUG_MODE_ECHO or CWSDEBUG_MODE_FILE
+     * @param string $debugFilePath - The debug file path for CWSDEBUG_MODE_FILE.
+     * @param boolean $debugFileClear - Clear the debug file at the beginning.
+     */
+    public function setDebugMode($debugMode, $debugFilePath=null, $debugFileClear=false)
+    {
+        $this->debugMode = $debugMode;
+        if ($debugFilePath != null) {
+            $this->debugFilePath = $debugFilePath;
+            $this->debugFileClear = $debugFileClear;
         }
     }
+    
+	/**
+	 * Captcha width in px.
+	 * @return the $width
+	 */
+	public function getWidth() {
+		return $this->width;
+	}
+
+	/**
+	 * Set the captcha width in px.
+	 * default 250
+	 * @param int $width
+	 */
+	public function setWidth($width) {
+		$this->width = $width;
+	}
+
+	/**
+	 * Captcha height in px.
+	 * @return the $height
+	 */
+	public function getHeight() {
+		return $this->height;
+	}
+
+	/**
+	 * Set the captcha height in px.
+	 * default 60
+	 * @param number $height
+	 */
+	public function setHeight($height) {
+		$this->height = $height;
+	}
+
+	/**
+	 * Captcha minimum length.
+	 * @return the $minLength
+	 */
+	public function getMinLength() {
+		return $this->minLength;
+	}
+
+	/**
+	 * Set the captcha minimum length.
+	 * default 6
+	 * @param number $minLength
+	 */
+	public function setMinLength($minLength) {
+		$this->minLength = $minLength;
+	}
+
+	/**
+	 * Captcha maximum length.
+	 * @return the $maxLength
+	 */
+	public function getMaxLength() {
+		return $this->maxLength;
+	}
+
+	/**
+	 * Set the captcha maximum length.
+	 * default 10
+	 * @param number $maxLength
+	 */
+	public function setMaxLength($maxLength) {
+		$this->maxLength = $maxLength;
+	}
+
+	/**
+	 * Hexadecimal background color.
+	 * @return the $bgdColor
+	 */
+	public function getBgdColor() {
+		return $this->bgdColor;
+	}
+
+	/**
+	 * Set the hexadecimal background color.
+	 * default '#FFFFFF'
+	 * @param string $bgdColor
+	 */
+	public function setBgdColor($bgdColor) {
+		$this->bgdColor = $bgdColor;
+	}
+
+	/**
+	 * The background transparent for PNG image type.
+	 * @return the $bgdTransparent
+	 */
+	public function getBgdTransparent() {
+		return $this->bgdTransparent;
+	}
+
+	/**
+	 * Set background transparent for PNG image type.
+	 * If enabled, this will disable the background color.
+	 * default false
+	 * @param boolean $bgdTransparent
+	 */
+	public function setBgdTransparent($bgdTransparent) {
+		$this->bgdTransparent = $bgdTransparent;
+	}
+
+	/**
+	 * Hexadecimal foreground colors list for font letters.
+	 * @return the $fgdColors
+	 */
+	public function getFgdColors() {
+		return $this->fgdColors;
+	}
+
+	/**
+	 * Set the Hexadecimal foreground colors list for font letters.
+	 * default array('#006ACC', '#00CC00', '#CC0000', '#8B28FA', '#FF7007')
+	 * @param array $fgdColors
+	 */
+	public function setFgdColors($fgdColors) {
+		$this->fgdColors = $fgdColors;
+	}
+
+	/**
+	 * Fonts definition (letter_space, min and max size, filename)
+	 * @return the $fonts
+	 */
+	public function getFonts() {
+		return $this->fonts;
+	}
+
+	/**
+	 * Max clockwise rotations for a letter.
+	 * @return the $maxRotation
+	 */
+	public function getMaxRotation() {
+		return $this->maxRotation;
+	}
+
+	/**
+	 * Set the max clockwise rotations for a letter.
+	 * default 7
+	 * @param number $maxRotation
+	 */
+	public function setMaxRotation($maxRotation) {
+		$this->maxRotation = $maxRotation;
+	}
+
+	/**
+	 * Generated image period (x, y)
+	 * @return the $period
+	 */
+	public function getPeriod() {
+		return $this->period;
+	}
+
+	/**
+	 * Set the generated image period (x, y)
+	 * default array(11, 12)
+	 * @param array $period
+	 */
+	public function setPeriod($period) {
+		$this->period = $period;
+	}
+
+	/**
+	 * Generated image amplitude (x, y)
+	 * @return the $amplitude
+	 */
+	public function getAmplitude() {
+		return $this->amplitude;
+	}
+
+	/**
+	 * Set the generated image amplitude (x, y)
+	 * default array(5, 14)
+	 * @param array $amplitude
+	 */
+	public function setAmplitude($amplitude) {
+		$this->amplitude = $amplitude;
+	}
+
+	/**
+	 * The blur effect using the Gaussian method.
+	 * @return the $blur
+	 */
+	public function getBlur() {
+		return $this->blur;
+	}
+
+	/**
+	 * Add blur effect using the Gaussian method.
+	 * default false
+	 * @param boolean $blur
+	 */
+	public function setBlur($blur) {
+		$this->blur = $blur;
+	}
+
+	/**
+	 * The emboss effect
+	 * @return the $emboss
+	 */
+	public function getEmboss() {
+		return $this->emboss;
+	}
+
+	/**
+	 * Add emboss effect
+	 * default false
+	 * @param boolean $emboss
+	 */
+	public function setEmboss($emboss) {
+		$this->emboss = $emboss;
+	}
+
+	/**
+	 * The pixelate effect
+	 * @return the $pixelate
+	 */
+	public function getPixelate() {
+		return $this->pixelate;
+	}
+
+	/**
+	 * Add pixelate effect
+	 * default false
+	 * @param boolean $pixelate
+	 */
+	public function setPixelate($pixelate) {
+		$this->pixelate = $pixelate;
+	}
+
+	/**
+	 * Image format
+	 * @return the $format
+	 */
+	public function getFormat() {
+		return $this->format;
+	}
+
+	/**
+	 * Set the image format (CWSCAP_FORMAT_PNG or CWSCAP_FORMAT_JPEG)
+	 * default CWSCAP_FORMAT_PNG
+	 * @param string $format
+	 */
+	public function setFormat($format) {
+		$this->format = $format;
+	}
+
+	/**
+	 * The last error.
+	 * @return the $error
+	 */
+	public function getError() {
+		return $this->error;
+	}
 }
 
 ?>

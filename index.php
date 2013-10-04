@@ -7,7 +7,15 @@
 <body>
     <?php
     session_start();
-    include('../class.cws.captcha.php');
+    
+    // Download CwsDump at https://github.com/crazy-max/CwsDump
+	require_once '../CwsDump/class.cws.dump.php';
+
+	// Download CwsDebug at https://github.com/crazy-max/CwsDebug
+	require_once '../CwsDebug/class.cws.debug.php';
+	
+    require_once 'class.cws.captcha.php';
+    
     $test = (isset($_POST['test'])) ? true : false;
     $code = (isset($_POST['code']) && !empty($_POST['code'])) ? stripslashes(trim($_POST['code'])) : '';
     
@@ -38,7 +46,7 @@
     
     <!-- Debug output -->
     <iframe frameborder="0" scrolling="no" hspace="0" marginheight="0" marginwidth="0" tabindex="-1" vspace="0"
-    allowtransparency="true" style="position:static;left:0pt;top:0pt;visibility:visible;width:100%;height:500px;border:none;"
+    allowtransparency="true" style="position:static;left:0pt;top:0pt;visibility:visible;width:100%;height:1000px;border:none;"
     src="logs.php"></iframe>
 </body>
 </html>
