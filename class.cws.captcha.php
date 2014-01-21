@@ -22,7 +22,7 @@
  *
  * @package CwsCaptcha
  * @author Cr@zy
- * @copyright 2013, Cr@zy
+ * @copyright 2013-2014, Cr@zy
  * @license GNU LESSER GENERAL PUBLIC LICENSE
  * @version 1.3
  * @link https://github.com/crazy-max/CwsCaptcha
