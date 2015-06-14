@@ -763,7 +763,7 @@ class CwsCaptcha
      * default FORMAT_PNG
      * @param string $format
      */
-    public function setFormat($format) {
+    private function setFormat($format) {
         $this->format = $format;
     }
     
