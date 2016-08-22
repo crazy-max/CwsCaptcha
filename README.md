@@ -1,7 +1,7 @@
 [![Latest Stable Version](https://img.shields.io/packagist/v/crazy-max/cws-captcha.svg?style=flat-square)](https://packagist.org/packages/crazy-max/cws-captcha)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.3.0-8892BF.svg?style=flat-square)](https://php.net/)
-[![Build Status](https://img.shields.io/travis/crazy-max/CwsCaptcha/1.5.svg?style=flat-square)](https://scrutinizer-ci.com/g/crazy-max/CwsCaptcha)
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/crazy-max/CwsCaptcha.svg?style=flat-square)](https://travis-ci.org/crazy-max/CwsCaptcha)
+[![Build Status](https://img.shields.io/travis/crazy-max/CwsCaptcha/1.5.svg?style=flat-square)](https://travis-ci.org/crazy-max/CwsCaptcha)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/crazy-max/CwsCaptcha.svg?style=flat-square)](https://scrutinizer-ci.com/g/crazy-max/CwsCaptcha)
 
 # CwsCaptcha
 
@@ -9,7 +9,7 @@ PHP class to generate a captcha to avoid spam.
 
 ## Requirements
 
-* PHP >= 5.3
+* PHP >= 5.3.0
 * CwsDebug >= 1.8
 * Enable the [php_gd2](http://www.php.net/manual/en/book.image.php) extension.
 
