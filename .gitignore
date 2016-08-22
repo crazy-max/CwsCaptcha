@@ -1,6 +1,3 @@
-# Eclipse
-.settings
-.settings/*
-.buildpath
-.project
-.jsdtscope
+/.idea/
+/vendor/
+/tests/*.html

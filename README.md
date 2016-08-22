@@ -1,21 +1,35 @@
+[![Build Status](https://travis-ci.org/crazy-max/CwsCaptcha.svg?branch=master)](https://travis-ci.org/crazy-max/CwsCaptcha) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/crazy-max/CwsCaptcha/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/crazy-max/CwsCaptcha/?branch=master)
+
 # CwsCaptcha
 
-CwsCaptcha is a PHP class to generate a captcha to avoid spam.
+PHP class to generate a captcha to avoid spam.
 
-## Installation
+## Requirements
 
+* PHP >= 5.3
+* CwsDebug >= 1.8
 * Enable the [php_gd2](http://www.php.net/manual/en/book.image.php) extension.
-* Download [CwsDump](https://github.com/crazy-max/CwsDump) and [CwsDebug](https://github.com/crazy-max/CwsDebug).
-* Copy the ``class.cws.captcha.php`` file in a folder on your server.
+
+## Installation with Composer
+
+```bash
+composer require crazy-max/cws-captcha
+```
+
+And download the code:
+
+```bash
+composer install # or update
+```
 
 ## Getting started
 
-See ``example.php``, ``example-captcha.php`` files samples to help you.
+See `tests/test.php`, `tests/testCaptcha.php` files samples to help you.
 
-To create a captcha, copy/edit ``example-captcha.php`` file and insert this in your HTML :
+To create a captcha, copy/edit ``testCaptcha.php`` file and insert this in your HTML :
 
 ```html
-<img src="example-captcha.php" />
+<img src="testCaptcha.php" />
 ```
 
 ## Example
