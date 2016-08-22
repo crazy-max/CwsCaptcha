@@ -1,5 +1,5 @@
 [![Latest Stable Version](https://img.shields.io/packagist/v/crazy-max/cws-captcha.svg?style=flat-square)](https://packagist.org/packages/crazy-max/cws-captcha)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.3-8892BF.svg?style=flat-square)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.3.0-8892BF.svg?style=flat-square)](https://php.net/)
 [![Build Status](https://img.shields.io/travis/crazy-max/CwsCaptcha/1.5.svg?style=flat-square)](https://scrutinizer-ci.com/g/crazy-max/CwsCaptcha)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/crazy-max/CwsCaptcha.svg?style=flat-square)](https://travis-ci.org/crazy-max/CwsCaptcha)
 
@@ -29,7 +29,7 @@ composer install # or update
 
 See `tests/test.php`, `tests/testCaptcha.php` files samples to help you.
 
-To create a captcha, copy/edit ``testCaptcha.php`` file and insert this in your HTML :
+To create a captcha, copy/edit `testCaptcha.php` file and insert this in your HTML :
 
 ```html
 <img src="testCaptcha.php" />
@@ -78,7 +78,7 @@ To create a captcha, copy/edit ``testCaptcha.php`` file and insert this in your 
 
 ## License
 
-LGPL. See ``LICENSE`` for more details.
+LGPL. See `LICENSE` for more details.
 
 ## More infos
 
