@@ -14,28 +14,32 @@ if ($reload) {
     <body>
         <?php
         session_start();
-        require_once __DIR__ . '/../vendor/autoload.php'; // Autoload files using Composer autoload
+        require_once __DIR__.'/../vendor/autoload.php'; // Autoload files using Composer autoload
 
         $test = (isset($_POST['test'])) ? true : false;
         $code = (isset($_POST['code']) && !empty($_POST['code'])) ? stripslashes(trim($_POST['code'])) : '';
-        
-        if ($test) { ?>
+
+        if ($test) {
+            ?>
             <div style="font-style:monospace;">
                 $_SESSION["<?php echo Cws\CwsCaptcha::SESSION_VAR; ?>"] = <?php echo $_SESSION[Cws\CwsCaptcha::SESSION_VAR]; ?><br />
                 Code entered : <strong><?php echo $code; ?></strong><br />
                 <?php
                 if (Cws\CwsCaptcha::check($code)) {
                     ?><strong>Result </strong> : <span style="color:#00CC00">OK!</span><?php
+
                 } else {
                     ?><strong>Result </strong> : <span style="color:#CC0000">KO...</span><?php
-                }
-                ?>
+
+                } ?>
             </div><br />
             <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
                 <input type="submit" name="reload" value="Reload" />
             </form>
             <?php
-        } else { ?>
+
+        } else {
+            ?>
             <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
                 <div><img src="testCaptcha.php" /></div>
                 Code : <input type="text" name="code">
@@ -43,6 +47,7 @@ if ($reload) {
                 <input type="submit" name="reload" value="Reload" />
             </form><br />
         <?php
+
         } ?>
     
         <!-- Debug output -->
