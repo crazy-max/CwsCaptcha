@@ -1,13 +1,10 @@
 # Changelog
 
-## 1.7 (2016/11/28)
-
-* Update dependencies
-
 ## 1.6 (2016/11/28)
 
 * Add StyleCI config
 * Fix short syntax for arrays
+* Update dependencies
 
 ## 1.5 (2016/08/22)
 
