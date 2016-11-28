@@ -67,69 +67,69 @@ class CwsCaptcha
      *
      * @var array
      */
-    private $fgdColors = [
+    private $fgdColors = array(
         '#006ACC', // blue
         '#00CC00', // green
         '#CC0000', // red
         '#8B28FA', // purple
         '#FF7007', // orange
-    ];
+    );
 
     /**
      * Fonts definition (letter_space, min and max size, filename).
      *
      * @var array
      */
-    private $fonts = [
-        [
+    private $fonts = array(
+        array(
             'letter_space' => 1,
             'min_size'     => 14,
             'max_size'     => 20,
             'filename'     => 'BoomBox.ttf',
-        ],
-        [
+        ),
+        array(
             'letter_space' => 0,
             'min_size'     => 22,
             'max_size'     => 38,
             'filename'     => 'Duality.ttf',
-        ],
-        [
+        ),
+        array(
             'letter_space' => 1,
             'min_size'     => 28,
             'max_size'     => 32,
             'filename'     => 'Monof.ttf',
-        ],
-        [
+        ),
+        array(
             'letter_space' => 0,
             'min_size'     => 22,
             'max_size'     => 28,
             'filename'     => 'OrionPax.ttf',
-        ],
-        [
+        ),
+        array(
             'letter_space' => 0,
             'min_size'     => 26,
             'max_size'     => 34,
             'filename'     => 'Stark.ttf',
-        ],
-        [
+        ),
+        array(
             'letter_space' => 1.5,
             'min_size'     => 24,
             'max_size'     => 30,
             'filename'     => 'StayPuft.ttf',
-        ],
-        [
+        ),
+        array(
             'letter_space' => 1,
             'min_size'     => 12,
             'max_size'     => 18,
             'filename'     => 'VenusRisingRg.ttf',
-        ],
-        [
+        ),
+        array(
             'letter_space' => 0.5,
             'min_size'     => 22,
             'max_size'     => 30,
             'filename'     => 'WhiteRabbit.ttf',
-        ],
-    ];
+        ),
+    );
 
     /**
      * Max clockwise rotations for a letter.
@@ -143,14 +143,14 @@ class CwsCaptcha
      *
      * @var array
      */
-    private $period = [11, 12];
+    private $period = array(11, 12);
 
     /**
      * Generated image amplitude (x, y).
      *
      * @var array
      */
-    private $amplitude = [5, 14];
+    private $amplitude = array(5, 14);
 
     /**
      * Add blur effect using the Gaussian method.
@@ -509,9 +509,9 @@ class CwsCaptcha
             $b = hexdec(substr($hex, 4, 2));
         }
 
-        $this->cwsDebug->labelValue('Hex2Rgb', '#'.$hex.' => '.implode(' ; ', [$r, $g, $b]), CwsDebug::VERBOSE_DEBUG);
+        $this->cwsDebug->labelValue('Hex2Rgb', '#'.$hex.' => '.implode(' ; ', array($r, $g, $b)), CwsDebug::VERBOSE_DEBUG);
 
-        return [$r, $g, $b];
+        return array($r, $g, $b);
     }
 
     /**
