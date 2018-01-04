@@ -10,13 +10,7 @@
 
 PHP class to generate a captcha to avoid spam.
 
-## Requirements
-
-* PHP >= 5.3.0
-* CwsDebug >= 1.8
-* Enable [php_gd2](http://www.php.net/manual/en/book.image.php) extension.
-
-## Installation with Composer
+## Installation
 
 ```bash
 composer require crazy-max/cws-captcha
