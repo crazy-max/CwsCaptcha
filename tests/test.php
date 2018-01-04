@@ -27,17 +27,14 @@ if ($reload) {
                 <?php
                 if (Cws\CwsCaptcha::check($code)) {
                     ?><strong>Result </strong> : <span style="color:#00CC00">OK!</span><?php
-
                 } else {
                     ?><strong>Result </strong> : <span style="color:#CC0000">KO...</span><?php
-
                 } ?>
             </div><br />
             <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
                 <input type="submit" name="reload" value="Reload" />
             </form>
             <?php
-
         } else {
             ?>
             <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
@@ -47,9 +44,8 @@ if ($reload) {
                 <input type="submit" name="reload" value="Reload" />
             </form><br />
         <?php
-
         } ?>
-    
+
         <!-- Debug output -->
         <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" tabindex="-1"
         allowtransparency="true" style="position:static;left:0;top:0;visibility:visible;width:100%;height:1000px;border:none;"
