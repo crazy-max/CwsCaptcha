@@ -4,7 +4,7 @@
   "description": "PHP class to generate a captcha to avoid spam.",
   "keywords": ["captcha", "spam"],
   "homepage": "https://github.com/crazy-max/CwsCaptcha",
-  "license": "LGPL",
+  "license": "MIT",
   "authors": [
      {
         "name": "CrazyMax",
