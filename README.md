@@ -4,6 +4,7 @@
 [![Code Quality](https://img.shields.io/codacy/grade/82d66e708a4a43ca9416d1a7f4b34f09.svg?style=flat-square)](https://www.codacy.com/app/crazy-max/CwsCaptcha)
 [![StyleCI](https://styleci.io/repos/9643298/shield?style=flat-square)](https://styleci.io/repos/9643298)
 [![Gemnasium](https://img.shields.io/gemnasium/crazy-max/CwsCaptcha.svg?style=flat-square)](https://gemnasium.com/github.com/crazy-max/CwsCaptcha)
+[![Beerpay](https://img.shields.io/beerpay/crazy-max/CwsCaptcha.svg?style=flat-square)](https://beerpay.io/crazy-max/CwsCaptcha)
 [![Donate Paypal](https://img.shields.io/badge/donate-paypal-7057ff.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WTZ7TL8BSSG9Y)
 
 ## About
@@ -75,11 +76,12 @@ To create a captcha, copy/edit `testCaptcha.php` file and insert this in your HT
 
 ## How can i help ?
 
-We welcome all kinds of contributions :raised_hands:!<br />
+All kinds of contributions are welcomed :raised_hands:!<br />
 The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:<br />
-Any funds donated will be used to help further development on this project! :gift_heart:
+But we're not gonna lie to each other, I'd rather you buy me a beer or two :beers:!
 
-[![Donate Paypal](.res/paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WTZ7TL8BSSG9Y)
+[![Beerpay](https://beerpay.io/crazy-max/CwsCaptcha/badge.svg?style=beer-square)](https://beerpay.io/crazy-max/CwsCaptcha)
+or [![Paypal](.res/paypal.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WTZ7TL8BSSG9Y)
 
 ## License
 
