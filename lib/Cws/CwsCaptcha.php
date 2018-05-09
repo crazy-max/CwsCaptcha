@@ -3,8 +3,8 @@
 /**
  * CwsCaptcha.
  *
- * @author Cr@zy
- * @copyright 2013-2016, Cr@zy
+ * @author CrazyMax
+ * @copyright 2013-2018, CrazyMax
  * @license GNU LESSER GENERAL PUBLIC LICENSE
  *
  * @link https://github.com/crazy-max/CwsCaptcha
