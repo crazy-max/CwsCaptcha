@@ -2,9 +2,6 @@
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.3.0-8892BF.svg?style=flat-square)](https://php.net/)
 [![Build Status](https://img.shields.io/travis/crazy-max/CwsCaptcha/master.svg?style=flat-square)](https://travis-ci.org/crazy-max/CwsCaptcha)
 [![Code Quality](https://img.shields.io/codacy/grade/82d66e708a4a43ca9416d1a7f4b34f09.svg?style=flat-square)](https://www.codacy.com/app/crazy-max/CwsCaptcha)
-[![StyleCI](https://styleci.io/repos/9643298/shield?style=flat-square)](https://styleci.io/repos/9643298)
-[![Libraries.io](https://img.shields.io/librariesio/github/crazy-max/CwsCaptcha.svg?style=flat-square)](https://libraries.io/github/crazy-max/CwsCaptcha)
-[![Beerpay](https://img.shields.io/beerpay/crazy-max/CwsCaptcha.svg?style=flat-square)](https://beerpay.io/crazy-max/CwsCaptcha)
 [![Donate Paypal](https://img.shields.io/badge/donate-paypal-7057ff.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WTZ7TL8BSSG9Y)
 
 ## About
@@ -80,8 +77,7 @@ All kinds of contributions are welcomed :raised_hands:!<br />
 The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:<br />
 But we're not gonna lie to each other, I'd rather you buy me a beer or two :beers:!
 
-[![Beerpay](https://beerpay.io/crazy-max/CwsCaptcha/badge.svg?style=beer-square)](https://beerpay.io/crazy-max/CwsCaptcha)
-or [![Paypal](.res/paypal.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WTZ7TL8BSSG9Y)
+[![Paypal](.res/paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WTZ7TL8BSSG9Y)
 
 ## License
 
