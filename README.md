@@ -2,7 +2,8 @@
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.3.0-8892BF.svg?style=flat-square)](https://php.net/)
 [![Build Status](https://img.shields.io/travis/com/crazy-max/CwsCaptcha/master.svg?style=flat-square)](https://travis-ci.com/crazy-max/CwsCaptcha)
 [![Code Quality](https://img.shields.io/codacy/grade/82d66e708a4a43ca9416d1a7f4b34f09.svg?style=flat-square)](https://www.codacy.com/app/crazy-max/CwsCaptcha)
-[![Donate Paypal](https://img.shields.io/badge/donate-paypal-7057ff.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WTZ7TL8BSSG9Y)
+[![Support me on Patreon](https://img.shields.io/badge/donate-patreon-fb664e.svg?style=flat-square)](https://www.patreon.com/crazymax)
+[![Donate Paypal](https://img.shields.io/badge/donate-paypal-7057ff.svg?style=flat-square)](https://www.paypal.me/crazyws)
 
 ## About
 
@@ -77,7 +78,8 @@ All kinds of contributions are welcome :raised_hands:!<br />
 The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:<br />
 But we're not gonna lie to each other, I'd rather you buy me a beer or two :beers:!
 
-[![Paypal](.res/paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WTZ7TL8BSSG9Y)
+[![Support me on Patreon](.res/patreon.png)](https://www.patreon.com/crazymax) 
+[![Paypal Donate](.res/paypal.png)](https://www.paypal.me/crazyws)
 
 ## License
 
